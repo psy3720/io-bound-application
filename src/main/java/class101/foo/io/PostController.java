@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 public class PostController {
 
@@ -33,7 +35,6 @@ public class PostController {
         );
     }
 
-
     // 3. 글 번호로 조회
     @GetMapping("/post/{id}")
     public Post getPostById(@PathVariable("id") Long id) {
@@ -41,5 +42,8 @@ public class PostController {
     }
 
     // 4. 글 내용으로 검색 -> 해당 내용이 포함된 모든 글
-
+    @GetMapping("/search")
+    public List<Post> findPostsByContent(@RequestParam String content) {
+        return postRepository.findByContentContains(content);
+    }
 }
